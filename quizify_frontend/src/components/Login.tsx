@@ -1,17 +1,24 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import login from '../api/login';
+
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission (e.g., send login request)
-    console.log('Login button clicked!');
-    console.log('Email:', email);
-    console.log('Password:', password);
+  
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const token = await login(username, password);
+      localStorage.setItem('authToken', token);
+      // Redirect or perform other actions after successful login
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
 
   return (
@@ -19,12 +26,12 @@ const Login = () => {
       <h2 className="text-2xl font-semibold mb-4">Login</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="email" className="block mb-1">Email</label>
+          <label htmlFor="username" className="block mb-1">Username</label>
           <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="w-full border border-gray-300 rounded-md px-3 py-2"
             required
           />
