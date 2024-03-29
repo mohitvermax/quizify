@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('accounts.urls')),  # Include accounts app URLs
     # Add other URL patterns as needed
+    path('', include('quizzes.urls')),
 ]

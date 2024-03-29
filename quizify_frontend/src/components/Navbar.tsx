@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
-  const authToken = localStorage.getItem('authToken');
   useEffect(() => {
-    
+    const authToken = localStorage.getItem('authToken');
     setIsLoggedIn(!!authToken);
-  }, []); 
+  }, []); // Run once when the component mounts
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    console.log("idhar...")
+    setIsLoggedIn(!!authToken);
+  }, [isLoggedIn]); // Re-run when isLoggedIn state changes
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     setIsLoggedIn(false);
-
+    navigate("/login")
+    location.reload()
+    // Perform any additional logout logic here
   };
 
   return (

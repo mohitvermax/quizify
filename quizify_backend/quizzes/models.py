@@ -1,3 +1,36 @@
-from django.db import models
+# models.py
 
-# Create your models here.
+from django.db import models
+from django.contrib.auth.models import User
+
+class Quiz(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        app_label = 'quizzes'  # Add this line
+
+class Question(models.Model):
+    quiz = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
+    text = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.text
+    
+    class Meta:
+        app_label = 'quizzes'  # Add this line
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
+    text = models.CharField(max_length=255)
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        app_label = 'quizzes'  # Add this line

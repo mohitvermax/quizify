@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'quizzes',
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 

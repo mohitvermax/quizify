@@ -1,21 +1,37 @@
-
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import login from '../api/login';
 
-
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    setIsLoggedIn(!!authToken);
+  }, []); // Run once when the component mounts
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    console.log("idhar...")
+    setIsLoggedIn(!!authToken);
+  }, [isLoggedIn]); // Re-run when isLoggedIn state changes
 
   
-
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const token = await login(username, password);
       localStorage.setItem('authToken', token);
-      // Redirect or perform other actions after successful login
+      
+      navigate("/")
+      location.reload()
+      setIsLoggedIn(true); // Update isLoggedIn state
+      
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -47,12 +63,12 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2  rounded-md">
+        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
           Login
         </button>
         <p className="mt-4">
-        Don't have an account? <Link to="/register" className="text-blue-500 hover:underline">Register</Link>
-      </p>
+          Don't have an account? <Link to="/register" className="text-blue-500 hover:underline">Register</Link>
+        </p>
       </form>
     </div>
   );
