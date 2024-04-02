@@ -2,11 +2,14 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime, timedelta
 
 class Quiz(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    time = models.DateTimeField(default=datetime.now())
+    duration = models.DurationField(default=timedelta(hours=3))
 
     def __str__(self):
         return self.title
