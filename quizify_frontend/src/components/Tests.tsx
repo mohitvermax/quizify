@@ -69,6 +69,9 @@ const Tests = () => {
         </div>
       </section>
     </div>
+  </section>
+</div>
+
   );
 };
 

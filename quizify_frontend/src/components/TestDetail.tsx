@@ -6,6 +6,8 @@ const TestDetail = () => {
   const { id } = useParams();
   const [quiz, setQuiz] = useState();
   const [answers, setAnswers] = useState({}); // State to hold user answers
+  const [submitted, setSubmitted] = useState(false);
+  const [results, setResults] = useState(null);
 
   useEffect(() => {
     const fetchQuizData = async () => {
@@ -35,12 +37,38 @@ const TestDetail = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    // Handle form submission, e.g., submit answers to backend
-    console.log('Submitted answers:', answers);
+    
+    // Initialize an object to store the results
+    const results = {};
+    
+    // Iterate through each question
+    quiz.questions.forEach(question => {
+      // Get the correct answer for the question
+      const correctAnswer = question.answers.find(answer => answer.is_correct);
+      
+      // Get the submitted answer for the question
+      const submittedAnswerId = answers[question.id];
+      
+      // Check if the submitted answer matches the correct answer
+      const isCorrect = String(correctAnswer.id) === submittedAnswerId;
+      
+ 
+      results[question.id] = {
+        isCorrect,
+        correctAnswer: correctAnswer.text,
+        submittedAnswer: question.answers.find(answer => String(answer.id) === submittedAnswerId)?.text || 'No answer provided',
+      };
+    });
+    setSubmitted(true);
+    setResults(results);
+    
+ 
+    console.log('Results:', results);
   };
+  
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 px-4">
       {quiz ? (
         <div>
           <h1 className="text-3xl font-semibold mb-4">{quiz.title}</h1>
@@ -73,6 +101,21 @@ const TestDetail = () => {
         </div>
       ) : (
         <p>Loading...</p>
+      )}
+      {submitted && results && (
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold mb-4">Results</h2>
+          <ul className="space-y-4">
+            {quiz.questions.map(question => (
+              <li key={question.id} className="flex justify-between">
+                <p>{question.text}</p>
+                <p className={results[question.id].isCorrect ? 'text-green-600' : 'text-red-600'}>
+                  {results[question.id].isCorrect ? 'Correct' : 'Incorrect'}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
