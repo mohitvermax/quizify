@@ -25,8 +25,10 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const token = await login(username, password);
-      localStorage.setItem('authToken', token);
+      const data= await login(username, password);
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('access', data.access)
+      console.log(data.access)
       
       navigate("/")
       location.reload()

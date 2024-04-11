@@ -7,7 +7,7 @@ const login = async (username, password) => {
       username,
       password
     });
-    return response.data.token;
+    return response.data;
   } catch (error) {
     console.error('Login failed:', error);
     throw error;

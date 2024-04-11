@@ -32,6 +32,14 @@ const Navbar = () => {
       <div className="hidden lg:flex flex-grow justify-center">
         <Link to="/" className="mx-4">Home</Link>
         <Link to="/about" className="mx-4">About Us</Link>
+        {
+          isLoggedIn && 
+          (localStorage.getItem('access') === 'admin' ? (
+            <Link to="/tests" className="mx-4">Create Tests</Link>
+          ) : (
+            <Link to="/tests" className="mx-4">Tests</Link>
+          )
+)        }
       </div>
       <div className="flex justify-center">
         {isLoggedIn ? (
