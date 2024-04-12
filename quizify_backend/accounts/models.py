@@ -3,9 +3,6 @@ from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 from quizzes.models import Quiz
 
-# class CustomUser(AbstractUser):
-#     pass
-
 class AttemptedTests(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)

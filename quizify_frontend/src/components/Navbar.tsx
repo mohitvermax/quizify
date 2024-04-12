@@ -12,12 +12,13 @@ const Navbar = () => {
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
-    console.log("idhar...")
+    // console.log("idhar...")
     setIsLoggedIn(!!authToken);
   }, [isLoggedIn]); // Re-run when isLoggedIn state changes
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('access');
     setIsLoggedIn(false);
     navigate("/login")
     location.reload()
@@ -34,12 +35,15 @@ const Navbar = () => {
         <Link to="/about" className="mx-4">About Us</Link>
         {
           isLoggedIn && 
-          (localStorage.getItem('access') === 'admin' ? (
-            <Link to="/tests" className="mx-4">Create Tests</Link>
-          ) : (
+          (
             <Link to="/tests" className="mx-4">Tests</Link>
           )
-)        }
+        }
+        {
+          localStorage.getItem('access') === 'admin' && (
+            <Link to="/tests" className="mx-4">Create Tests</Link>
+          )
+        }
       </div>
       <div className="flex justify-center">
         {isLoggedIn ? (

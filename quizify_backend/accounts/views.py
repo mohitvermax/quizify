@@ -35,13 +35,13 @@ class UserLogin(generics.GenericAPIView):
         
         user = authenticate(username=username, password=password)
         
-        if user:
-            if user.is_superuser:
-                access = 'admin'
-            else:
-                access = 'user'
-
-            token, _ = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key, 'access' : access}, status=status.HTTP_200_OK)
-        else:
+        if not user:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        if user.is_superuser:
+            access = 'admin'
+        else:
+            access = 'user'
+
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key, 'access' : access}, status=status.HTTP_200_OK)

@@ -11,12 +11,6 @@ const TestInfo = () => {
       try {
         const quizData = await getQuizById(id);
         setQuiz(quizData);
-        // Initialize answers state with empty values for each question
-        const initialAnswers = {};
-        quizData.questions.forEach(question => {
-          initialAnswers[question.id] = '';
-        });
-        setAnswers(initialAnswers);
       } catch (error) {
         console.error('Error fetching quiz:', error);
       }

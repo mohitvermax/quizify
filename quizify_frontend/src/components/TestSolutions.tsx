@@ -44,7 +44,8 @@ const TestSolutions = () => {
                         id={`answer-${answer.id}`}
                         name={`question-${question.id}`}
                         value={answer.id}
-                        checked={answers[question.id] === String(answer.id)}
+                        checked={answer.is_correct}
+                        readOnly
                       />
                       <label htmlFor={`answer-${answer.id}`} className="ml-2">{answer.text}</label>
                     </li>
