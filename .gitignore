@@ -1,5 +1,7 @@
 # Ignore virtual environment
 quizify_backend/myvenv/
+quizify_backend/venv/
+
 
 # Ignore node modules
 quizify_frontend/node_modules/

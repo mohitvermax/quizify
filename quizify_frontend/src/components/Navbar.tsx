@@ -41,7 +41,7 @@ const Navbar = () => {
         }
         {
           localStorage.getItem('access') === 'admin' && (
-            <Link to="/tests" className="mx-4">Create Tests</Link>
+            <Link to="/create-test" className="mx-4">Create Tests</Link>
           )
         }
       </div>

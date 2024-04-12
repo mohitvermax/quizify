@@ -8,6 +8,7 @@ import Tests from './components/Tests';
 import TestDetail from './components/TestDetail';
 import TestSolutions from './components/TestSolutions';
 import TestInfo from './components/TestInfo';
+import CreateTest from './components/CreateTest';
 
 const App = () => {
   const token = localStorage.getItem('authToken');
@@ -24,6 +25,8 @@ const App = () => {
               <Route path="test/:id" element={<TestDetail />} />
               <Route path="test/:id/solutions" element={<TestSolutions />} />
               <Route path="test/:id/info" element={<TestInfo/>} />
+              <Route path="create-test" element={<CreateTest/>} />
+
             </>
           ) : (
             <>
